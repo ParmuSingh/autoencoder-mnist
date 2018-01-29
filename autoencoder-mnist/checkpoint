@@ -1,0 +1,2 @@
+model_checkpoint_path: "E:/workspace_py/saved_models/autoencoder/autoencoder-mnist/autoencoder-1.ckpt"
+all_model_checkpoint_paths: "E:/workspace_py/saved_models/autoencoder/autoencoder-mnist/autoencoder-1.ckpt"
