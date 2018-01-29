@@ -66,7 +66,9 @@ prediction = sess.run(ol, feed_dict={data_ph: [mnist.train.images[0]]})
 print("prediction: ", prediction)
 
 import matplotlib.pyplot as plt
-
+plt.subplot(1, 2, 1)
+plt.imshow(np.reshape(mnist.train.images[0], [28, 28]))
+plt.subplot(1,2, 2)
 plt.imshow(np.reshape(prediction, [28, 28]))
 plt.show()
 sess.close()
