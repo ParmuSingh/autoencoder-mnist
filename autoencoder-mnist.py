@@ -1,35 +1,12 @@
-'''
-increase epochs.
-Lower lr after epoch 20.
-'''
-# epochs completed = 21
+# epochs completed = 30
 
 import tensorflow as tf
 import numpy as np
-# from cv2 import imread, imshow
-from PIL import Image
 from tensorflow.examples.tutorials.mnist import input_data
 
-mnist = input_data.read_data_sets("E:/workspace_py/mnist/", one_hot=True)
-# print(mnist)
-# base_path = "E:/workspace_py/datasets/catsdogs/train/train/"
-# data = []
+mnist = input_data.read_data_sets("E:/workspace_py/mnist/", one_hot=True) # use your path.
 
-# for i in range(5000):
-# 	path = base_path + 'cat.' + str(i) + '.jpg'
-# 	# print(path)
-# 	img = Image.open(path)
-# 	img = img.resize((128, 128))
-# 	img = np.asarray(img)
-
-# 	data.append(img)
-
-# data = np.reshape(data, [-1, 128*128*3])
-# print(len(data))
-# model
-
-n_epochs = 30 # 30 before
-# n_examples = 5000
+n_epochs = 30
 batch_size = 128
 
 data_ph = tf.placeholder('float', [None, 28*28], name = 'data_ph')
@@ -69,27 +46,22 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 saver = tf.train.Saver()
 
-# saver = tf.train.import_meta_graph("E:/workspace_py/saved_models/autoencoder/autoencoder-1.ckpt.meta")
-# saver.restore(sess, tf.train.latest_checkpoint('E:/workspace_py/saved_models/autoencoder/autoencoder-mnist'))
+##########
+# saver = tf.train.import_meta_graph("E:/workspace_py/saved_models/autoencoder/autoencoder-1.ckpt.meta") # use your path.
+# saver.restore(sess, tf.train.latest_checkpoint('E:/workspace_py/saved_models/autoencoder/autoencoder-mnist')) # use your path.
+########## UNCOMMENT THESE LINES TO CONTINUE FROM THE SAVED MODEL. CURRENTLY, THE SAVED MODEL HAS DONE 30 EPOCHS.
+
 
 # err = 999999 # infinity
 for epoch in range(n_epochs):
 	ptr = 0
 	for iteration in range(int(mnist.train.num_examples/batch_size)):
-
 		epoch_x, epoch_y = mnist.train.next_batch(batch_size)
-		# epoch_x = data[ptr : ptr + batch_size]
-		# epoch_y = data[ptr : ptr + batch_size]
-		# ptr += batch_size
-		# if err < 12500:
-		# 	_, err = sess.run([train, loss], feed_dict={data_ph: epoch_x, output_ph: epoch_y, learning_rate: 1.0})
-		# else:
 		_, err = sess.run([train, loss], feed_dict={data_ph: epoch_x, output_ph: epoch_x, learning_rate: 0.01})
 
 	print("Loss @ epoch ", str(epoch), " = ", err)
-	save_path = saver.save(sess, "E:/workspace_py/saved_models/autoencoder/autoencoder-mnist/autoencoder-1.ckpt")
+	save_path = saver.save(sess, "E:/workspace_py/saved_models/autoencoder/autoencoder-mnist/autoencoder-1.ckpt") # use your path.
 
-# saver = tf.train.Saver()
 prediction = sess.run(ol, feed_dict={data_ph: [mnist.train.images[0]]})
 print("prediction: ", prediction)
 
