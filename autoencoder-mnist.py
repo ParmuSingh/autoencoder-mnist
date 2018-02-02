@@ -11,9 +11,9 @@ batch_size = 128
 
 data_ph = tf.placeholder('float', [None, 28*28], name = 'data_ph')
 output_ph = tf.placeholder('float', [None, 28*28], name = 'output_ph')
-learning_rate = tf.placeholder('float', [], name = 'learning_rate_ph')
+learning_rate = tf.placeholder('float', [], name = 'learning_rate_ph') # keeping lr as a placeholder allows variable lr.
 
-weights = {
+weights = { # set of weights.
 	'hl1': tf.Variable(tf.random_normal([28*28, 250])),
 	# 'hl2': tf.Variable(tf.random_normal([500, 200])),
 	'hl2': tf.Variable(tf.random_normal([250, 50])), # middle layer
@@ -22,7 +22,7 @@ weights = {
 	'ol': tf.Variable(tf.random_normal([250, 28*28]))
 }
 
-biases = {
+biases = { # set of biases.
 	'hl1': tf.Variable(tf.random_normal([250])),
 	# 'hl2': tf.Variable(tf.random_normal([200])),
 	'hl2': tf.Variable(tf.random_normal([50])),
@@ -54,7 +54,6 @@ saver = tf.train.Saver()
 
 # err = 999999 # infinity
 for epoch in range(n_epochs):
-	ptr = 0
 	for iteration in range(int(mnist.train.num_examples/batch_size)):
 		epoch_x, epoch_y = mnist.train.next_batch(batch_size)
 		_, err = sess.run([train, loss], feed_dict={data_ph: epoch_x, output_ph: epoch_x, learning_rate: 0.01})
